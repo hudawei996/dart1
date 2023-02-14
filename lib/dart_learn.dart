@@ -1,4 +1,3 @@
-
 //以下dart内容,来自URL
 //https://www.dartcn.com/guides/language/language-tour
 
@@ -14,19 +13,23 @@
 // 一种方便的插入变量值的方式，字符串字面值：$msg
 // 应用程序的入口：main 函数
 
-
 //
 // 例如，第二行代码是会致使报错的，
 // 没法将一个 double 值赋值到一个 int 类型变量上学
 
+import 'dart:convert';
+import 'dart:io';
+
 main() {
+
+
 
   //一,变量
   //与 Java 语言相比，dart 语言包含的
   // 相似的基本数据类型只有 int 和 double 两种，
   // 且这两种类型的变量均是对象，其默认值均为 null
 
-  //不给初始值会报错:lib/number_my.dart:26:9:
+  //不给初始值会报错:lib/dart_learn.dart:26:9:
   // Error: Late variable 'value' without initializer
   // is definitely unassigned.
   //   print(value); //null
@@ -104,12 +107,9 @@ main() {
   var s = 'string interpolation';
 
   assert('Dart has $s, which is very handy.' ==
-      'Dart has string interpolation, ' +
-          'which is very handy.');
-  assert('That deserves all caps. ' +
-      '${s.toUpperCase()} is very handy!' ==
-      'That deserves all caps. ' +
-          'STRING INTERPOLATION is very handy!');
+      'Dart has string interpolation, ' + 'which is very handy.');
+  assert('That deserves all caps. ' + '${s.toUpperCase()} is very handy!' ==
+      'That deserves all caps. ' + 'STRING INTERPOLATION is very handy!');
 
   //提示： == 运算符用来测试两个对象是否相等。
   // 在字符串中，如果两个字符串包含了相同的编码序列，
@@ -123,26 +123,24 @@ main() {
   assert(s11 ==
       'String concatenation works even over '
           'line breaks.');
-  assert(s11 ==  'String concatenation works even over line breaks.');
+  assert(s11 == 'String concatenation works even over line breaks.');
 
   var s21 = 'The + operator ' + 'works, as well.';
   assert(s21 == 'The + operator works, as well.');
 
-
   /**
    * 使用连续三个单引号或者三个双引号实现多行字符串对象的创建：
    */
-    var s12 = '''
+  var s12 = '''
   You can create
   multi-line strings like this one.
   ''';
 
-    var s22 = """This is also a
+  var s22 = """This is also a
   multi-line string.""";
 
-    //使用 r 前缀，可以创建 “原始 raw” 字符串：
+  //使用 r 前缀，可以创建 “原始 raw” 字符串：
   var ss = r"In a raw string, even \n isn't special.";
-
 
   /**
    * Set
@@ -152,8 +150,8 @@ main() {
   var halogens = {'fluorine', 'chlorine', 'bromine', 'iodine', 'astatine'};
 
   var names = <String>{};
-  Set<String> names1 = {};//这样也是可以的
-  var names2 = {};//这样会创建一个Map,而不是Set
+  Set<String> names1 = {}; //这样也是可以的
+  var names2 = {}; //这样会创建一个Map,而不是Set
 
   //使用 add() 或 addAll() 为已有的 Set 添加元素：
   var elements = <String>{};
@@ -179,13 +177,13 @@ main() {
 
   /**
    ** Map
-    *  通常来说， Map 是用来关联 keys 和 values 的对象。
-    *  keys 和 values 可以是任何类型的对象。
-    *  在一个 Map 对象中一个 key 只能出现一次。
-    *  但是 value 可以出现多次。
-    *  Dart 中 Map 通过 Map 字面量 和 Map 类型来实现。
-    *
-    *  下面是使用 Map 字面量的两个简单例子：
+   *  通常来说， Map 是用来关联 keys 和 values 的对象。
+   *  keys 和 values 可以是任何类型的对象。
+   *  在一个 Map 对象中一个 key 只能出现一次。
+   *  但是 value 可以出现多次。
+   *  Dart 中 Map 通过 Map 字面量 和 Map 类型来实现。
+   *
+   *  下面是使用 Map 字面量的两个简单例子：
    */
   var gifts = {
     // Key:    Value
@@ -242,7 +240,6 @@ main() {
    *  对于特殊的非 4 个数值的情况， 把编码值放到大括号中即可。
    *  例如，emoji 的笑脸 (�) 是 \u{1f600}。
    */
-
 
   /**
    * 函数
@@ -332,19 +329,15 @@ main() {
    * 并分别指定参数 list 和 gifts 的默认值。
    */
   void doStuff(
-      {
-        List<int> list = const [1, 2, 3],
-        Map<String, String> gifts = const {
-          'first': 'paper',
-          'second': 'cotton',
-          'third': 'leather'
-        }
-      }
-      ) {
+      {List<int> list = const [1, 2, 3],
+      Map<String, String> gifts = const {
+        'first': 'paper',
+        'second': 'cotton',
+        'third': 'leather'
+      }}) {
     print('list:  $list');
     print('gifts: $gifts');
   }
-
 
   /**
    * main() 函数
@@ -372,7 +365,6 @@ main() {
 // 将 printElement 函数作为参数传递。
   list.forEach(printElement);
 
-
   var loudify = (msg) => '!!! ${msg.toUpperCase()} !!!';
   assert(loudify('hello') == '!!! HELLO !!!');
 
@@ -395,7 +387,7 @@ main() {
   assert(add4(3) == 7);
 
   // var x1;//简写
-  void Function() x1;//函数类型这样写比较好,清晰
+  void Function() x1; //函数类型这样写比较好,清晰
   // 比较顶级函数。
   x1 = foo;
   assert(foo == x1);
@@ -417,9 +409,8 @@ main() {
   // 所以它们不相等。
   assert(v1.baz != w1.baz);
 
-
   /**
-   * expr1 ?? expr2
+   * expr1 ?? expr2  和 kotlin 中的 ?. 作用一样
       如果 expr1 是 non-null， 返回 expr1 的值；
       否则, 执行并返回 expr2 的值。
 
@@ -428,7 +419,6 @@ main() {
 
       dart中 也有 expr1 ?. expr2
       如果非空往后执行,否则执行?.后边的代码
-
 
 
       kotlin中 空判断和赋值是
@@ -440,7 +430,6 @@ main() {
       kotlin没有三位运算符,只能用if else
 
    */
-
 
   /**
    * 级联运算符 (..)
@@ -454,7 +443,6 @@ main() {
 //   button.text = 'Confirm';
 //   button.classes.add('important');
 //   button.onClick.listen((e) => window.alert('Confirmed!'));
-
 
   /**
    * 级联运算符可以嵌套，例如：
@@ -479,6 +467,25 @@ main() {
 
    */
 
+  /**
+   * 流程控制语句
+   *
+   * 你可以通过下面任意一种方式来控制 Dart 程序流程：
+
+      if and else
+
+      for loops
+
+      while and do-while loops
+
+      break and continue
+
+      switch and case
+
+      assert
+
+      使用 try-catch 和 throw 也可以改变程序流程， 详见 Exceptions。
+   */
 
   /**
    * 构造函数,两种写法
@@ -508,23 +515,21 @@ main() {
       那么它就只有默认构造函数 (匿名，没有参数) 。
 
 
-
       命名构造函数
       使用命名构造函数可为一个类实现多个构造函数，
       也可以使用命名构造函数来更清晰的表明函数意图：
       class Point {
-        num x, y;
+      num x, y;
 
-        Point(this.x, this.y);
+      Point(this.x, this.y);
 
-        // 命名构造函数
-        Point.origin() {
-          x = 0;
-          y = 0;
-        }
+      // 命名构造函数
+      Point.origin() {
+      x = 0;
+      y = 0;
+      }
       }
    */
-
 
   /**
    * 调用父类非默认构造函数
@@ -552,9 +557,77 @@ main() {
   }
   (emp as Person44).firstName = 'Json';
 
+
+  /*
+   * 声明异步函数
+   *
+   * 被调用方法 不能放到 调用后边 去申明
+   */
+  void checkVersion() {
+    print('check version');
+  }
+
+  //这种写法是错误的
+  // String lookUpVersion() => '1.0.0';
+  //正确写法
+  Future<String> lookUpVersion() async => '1.0.0';
+
+  Future test() async {
+    checkVersion();
+    print('In main: version is ${await lookUpVersion()}');
+  }
+
+
+
+  testJson();
+
+
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/// 调用父类非默认构造函数
+///  默认情况下，子类的构造函数会自动调用父类的默认构造函数（匿名，无参数）。
+///  父类的构造函数在子类构造函数体开始执行的位置被调用。
+///  如果提供了一个 initializer list （初始化参数列表），
+///  则初始化参数列表在父类构造函数执行之前执行。 总之，执行顺序如下：
+///
+///  initializer list （初始化参数列表）
+///  superclass’s no-arg constructor （父类的无名构造函数）
+///  main class’s no-arg constructor （主类的无名构造函数）
+///  如果父类中没有匿名无参的构造函数， 则需要手工调用父类的其他构造函数。
+///  在当前构造函数冒号 (:) 之后，函数体之前，声明调用父类构造函数。
+///
+///  下面的示例中，Employee 类的构造函数调用了父类 Person 的命名构造函数。
+///  点击运行按钮 执行示例代码。
 class Person44 {
   String firstName = "";
 
@@ -572,8 +645,21 @@ class Employee extends Person44 {
   }
 }
 
+/// 重定向构造函数.有时构造函数的唯一目的是重定向到同一个类中的另一个构造函数。
+///   重定向构造函数的函数体为空， 构造函数的调用在冒号 (:) 之后。
+class Point44 {
+  num x, y;
+
+  // 类的主构造函数。
+  Point44(this.x, this.y);
+
+  // 指向主构造函数
+  Point44.alongXAxis(num x) : this(x, 0);
+}
+
 class Point11 {
-  num x =0, y =0;
+  // num x , y;//没有初始值会报错
+  num x = 0, y = 0;
 
   Point11(num x, num y) {
     // 还有更好的方式来实现下面代码，敬请关注。
@@ -582,7 +668,220 @@ class Point11 {
   }
 }
 
+/// 工厂构造函数
+/// 当执行构造函数并不总是创建这个类的一个新实例时，则使用 factory 关键字。
+/// 例如，一个工厂构造函数可能会返回一个 cache 中的实例，
+/// 或者可能返回一个子类的实例。
+//
+/// 以下示例演示了从缓存中返回对象的工厂构造函数：
+// class Logger {
+//   final String name;
+//   bool mute = false;
+//
+//   // 从命名的 _ 可以知，
+//   // _cache 是私有属性。
+//   static final Map<String, Logger> _cache = <String, Logger>{};
+//
+//   factory Logger(String name) {
+//     if (_cache.containsKey(name)) {
+//       return _cache[name];
+//     } else {
+//       final logger = Logger._internal(name);
+//       _cache[name] = logger;
+//       return logger;
+//     }
+//   }
+//
+//   Logger._internal(this.name);
+//
+//   void log(String msg) {
+//     if (!mute) print(msg);
+//   }
+// }
+
+
+/**
+ * dart:async - 异步编程
+    异步编程通常使用回调方法来实现，但是 Dart 提供了其他方案：
+      Future 和 Stream 对象。
+    Future 类似与 JavaScript 中的 Promise ，
+      代表在将来某个时刻会返回一个结果。
+    Stream 类可以用来获取一系列的值，比如，一些列事件。
+      Future， Stream，以及更多内容，
+    参考 dart:async library (API reference)。
+
+
+    runUsingAsyncAwait() async {
+    // ...
+    var entryPoint = await findEntryPoint();
+    var exitCode = await runExecutable(entryPoint, args);
+    await flushThenExit(exitCode);
+    }
+
+
+
+    var entryPoint = await findEntryPoint();
+    try {
+    var exitCode = await runExecutable(entryPoint, args);
+    await flushThenExit(exitCode);
+    } catch (e) {
+    // Handle the error...
+    }
+
+
+    基本用法
+    当 future 执行完成后，then() 中的代码会被执行。
+
+    then() 中的代码会在 future 完成后被执行。
+    例如， HttpRequest.getString() 返回一个 future 对象，
+    因为 HTTP 请求可能需要一段时间。
+    当 Future 完成并且保证字符串值有效后，
+    使用 then() 来执行你需要的代码：
+
+ */
+
+testFuture(){
+  // var url = "https://baidu.com";
+  // HttpRequest.getString(url).then((String result) {
+  //   print(result);
+  // }).catchError((e) {
+  //   // Handle or ignore the error.
+  // });
+
+
+  // Future result = costlyQuery(url);
+  // result
+  //     .then((value) => expensiveWork(value))
+  //     .then((_) => lengthyComputation())
+  //     .then((_) => print('Done!'))
+  //     .catchError((exception) {
+  //   /* Handle exception... */
+  // });
+
+
+  /**
+   * 等待多个 Future
+      有时代码逻辑需要调用多个异步函数，
+      并等待它们全部完成后再继续执行。
+      使用 Future.wait() 静态方法管理多个 Future 以及等待它们完成：
+   */
+  // Future deleteLotsOfFiles() async =>  ...
+  // Future copyLotsOfFiles() async =>  ...
+  // Future checksumLotsOfOtherFiles() async =>  ...
+  //
+  // await Future.wait([
+  // deleteLotsOfFiles(),
+  // copyLotsOfFiles(),
+  // checksumLotsOfOtherFiles(),
+  // ]);
+  // print('Done with all the long steps!');
+}
+
+
+/// Stream
+//   Future testStream(List<String> arguments) async {
+//     // ...
+//     if (await FileSystemEntity.isDirectory(searchPath)) {
+//       final startingDir = Directory(searchPath);
+//       await for (var entity in startingDir.list(
+//           recursive: argResults[recursive],
+//           followLinks: argResults[followLinks])) {
+//         if (entity is File) {
+//           searchFile(entity, searchTerms);
+//         }
+//       }
+//     } else {
+//       searchFile(File(searchPath), searchTerms);
+//     }
+//   }
+
+
+
+
+/// 编解码 JSON
+  // 提示：在 JSON 字符串中，必须使用双引号（"）,
+// 而不是单引号（'）。
+// 下面是 JSON 字符串，非 Dart 字符串。
+  testJson(){
+
+
+//       var jsonString = '''
+//   [
+//     {"score": 40},
+//     {"score": 80}
+//   ]
+// ''';
+
+    // var jsonString =
+    //     '{"text": "foo", "value": 1, "status": false, "extra": null}';
+
+    // var jsonString = [{"score": 40}, {"score": 80}];
+    //
+    // var scores = jsonDecode(jsonString);
+    // assert(scores is List);
+    //
+    // var firstScore = scores[0];
+    // assert(firstScore is Map);
+    // assert(firstScore['score'] == 40);
+
+
+
+
+
+    const jsonString =
+        '{"text": "foo", "value": 1, "status": false, "extra": null}';
+
+    final data = jsonDecode(jsonString);
+    print(data['text']); // foo
+    print(data['value']); // 1
+    print(data['status']); // false
+    print(data['extra']); // null
+  }
+
+
+
+/// 使用
+/// var logger = Logger('UI');
+/// logger.log('Button clicked');
+
+/// Getter 和 Setter
+///  Getter 和 Setter 是用于对象属性读和写的特殊方法。
+///  回想之前的例子，每个实例变量都有一个隐式 Getter ，
+///  通常情况下还会有一个 Setter 。
+///  使用 get 和 set 关键字实现 Getter 和 Setter ，
+///  能够为实例创建额外的属性。
+class Rectangle {
+  num left, top, width, height;
+
+  Rectangle(this.left, this.top, this.width, this.height);
+
+  // 定义两个计算属性： right 和 bottom。
+  num get right => left + width;
+
+  set right(num value) => left = value - width;
+
+  num get bottom => top + height;
+
+  set bottom(num value) => top = value - height;
+}
+
+/// 使用
+/// void main() {
+///   var rect = Rectangle(3, 4, 20, 15);
+///   assert(rect.left == 3);
+///   rect.right = 12;
+///   assert(rect.left == -8);
+/// }
+///
+
+///为类添加功能： Mixin
+/// Mixin 是复用类代码的一种途径， 复用的类可以在不同层级，之间可以不存在继承关系。
+///
+/// 通过 with 后面跟一个或多个混入的名称，来 使用 Mixin ，
+///   下面的示例演示了两个使用 Mixin 的类：
+
 class Point22 {
+  //这样写可以没有初始值
   num x, y;
 
   // 在构造函数体执行前，
@@ -591,8 +890,8 @@ class Point22 {
 }
 
 class Point33 {
-  // num x , y;//不可以没有初始值
-  num x =0, y=0;
+  // num x , y;//没有初始值会报错
+  num x = 0, y = 0;
 
   Point33(this.x, this.y);
 
@@ -602,7 +901,6 @@ class Point33 {
     y = 0;
   }
 }
-
 
 void foo() {} // 顶级函数
 
